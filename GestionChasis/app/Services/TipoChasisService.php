@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\TipoChasisNotFoundException;
 use App\Http\Requests\StoreTipoChasisRequest;
 use App\Http\Requests\UpdateTipoChasisRequest;
 use App\Models\TipoChasis;
@@ -21,7 +22,13 @@ class TipoChasisService
 
     public function find(int $id): TipoChasis
     {
-        return TipoChasis::with('chasis')->findOrFail($id);
+        $tipoChasis = TipoChasis::with('chasis')->find($id);
+
+        if (! $tipoChasis) {
+            throw new TipoChasisNotFoundException($id);
+        }
+
+        return $tipoChasis;
     }
 
     public function update(TipoChasis $tipoChasis, UpdateTipoChasisRequest $request): TipoChasis

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\UbicacionNotFoundException;
 use App\Http\Requests\StoreUbicacionRequest;
 use App\Http\Requests\UpdateUbicacionRequest;
 use App\Models\Ubicacion;
@@ -21,7 +22,13 @@ class UbicacionService
 
     public function find(int $id): Ubicacion
     {
-        return Ubicacion::with('chasis')->findOrFail($id);
+        $ubicacion = Ubicacion::with('chasis')->find($id);
+
+        if (! $ubicacion) {
+            throw new UbicacionNotFoundException($id);
+        }
+
+        return $ubicacion;
     }
 
     public function update(Ubicacion $ubicacion, UpdateUbicacionRequest $request): Ubicacion

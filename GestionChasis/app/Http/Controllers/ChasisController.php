@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateChasisRequest;
 use App\Models\Chasis;
 use App\Services\ChasisService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
 class ChasisController extends BaseController
@@ -15,9 +16,18 @@ class ChasisController extends BaseController
     {
     }
 
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        return response()->json($this->chasisService->all());
+        $filters = $request->validate([
+            'per_page' => ['sometimes', 'integer', 'min:1', 'max:100'],
+            'search' => ['sometimes', 'string', 'max:255'],
+            'estado' => ['sometimes', 'string', 'exists:estados,slug'],
+            'tipo_chasis_id' => ['sometimes', 'integer', 'exists:tipo_chasis,id'],
+            'ubicacion_id' => ['sometimes', 'integer', 'exists:ubicaciones,id'],
+            'equipamiento_mal' => ['sometimes', 'in:patas,luces,manoplas,mangueras,llantas'],
+        ]);
+
+        return response()->json($this->chasisService->all($filters));
     }
 
     public function store(StoreChasisRequest $request): JsonResponse

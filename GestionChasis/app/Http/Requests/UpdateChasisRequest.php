@@ -24,7 +24,13 @@ class UpdateChasisRequest extends FormRequest
             'nombre' => ['sometimes', 'required', 'string', 'max:255'],
             'categoria' => ['nullable', 'string', 'max:255'],
             'numero' => ['nullable', 'integer', Rule::unique('chasis', 'numero')->ignore($chasis?->id)],
-            'estado' => ['sometimes', 'required', 'string', 'max:255'],
+            'estado' => ['prohibited'],
+            'estado_id' => ['prohibited'],
+            'averia_patas' => ['sometimes', 'boolean'],
+            'averia_luces' => ['sometimes', 'boolean'],
+            'averia_manoplas' => ['sometimes', 'boolean'],
+            'averia_mangueras' => ['sometimes', 'boolean'],
+            'averia_llantas' => ['sometimes', 'boolean'],
             'placa' => ['nullable', 'string', 'max:255'],
         ];
     }

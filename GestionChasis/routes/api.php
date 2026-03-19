@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChasisController;
+use App\Http\Controllers\EstadoController;
 use App\Http\Controllers\TipoChasisController;
 use App\Http\Controllers\UbicacionController;
 use Illuminate\Support\Facades\Route;
@@ -13,3 +14,6 @@ Route::apiResource('tipos-chasis', TipoChasisController::class)
 
 Route::apiResource('ubicaciones', UbicacionController::class)
     ->parameters(['ubicaciones' => 'ubicacion']);
+
+Route::apiResource('estados', EstadoController::class)
+    ->parameters(['estados' => 'estado']);

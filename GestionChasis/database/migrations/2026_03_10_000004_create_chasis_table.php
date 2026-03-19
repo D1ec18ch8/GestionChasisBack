@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('categoria')->nullable();
             $table->unsignedInteger('numero')->nullable();
-            $table->string('estado')->default('operativo');
+            $table->string('estado')->default('optimo');
             $table->string('placa')->nullable();
             $table->foreignId('tipo_chasis_id')->constrained('tipo_chasis')->cascadeOnDelete();
             $table->foreignId('ubicacion_id')->nullable()->constrained('ubicaciones')->nullOnDelete();
