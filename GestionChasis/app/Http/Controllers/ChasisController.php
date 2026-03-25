@@ -32,7 +32,12 @@ class ChasisController extends BaseController
 
     public function store(StoreChasisRequest $request): JsonResponse
     {
-        return response()->json($this->chasisService->create($request), 201);
+        $chasis = $this->chasisService->create($request);
+
+        return response()->json([
+            'message' => 'Chasis creado exitosamente.',
+            ...$chasis->toArray(),
+        ], 201);
     }
 
     public function show(int $id): JsonResponse
@@ -42,7 +47,12 @@ class ChasisController extends BaseController
 
     public function update(UpdateChasisRequest $request, Chasis $chasis): JsonResponse
     {
-        return response()->json($this->chasisService->update($chasis, $request));
+        $chasisActualizado = $this->chasisService->update($chasis, $request);
+
+        return response()->json([
+            'message' => 'Chasis actualizado exitosamente.',
+            ...$chasisActualizado->toArray(),
+        ]);
     }
 
     public function destroy(Chasis $chasis): JsonResponse

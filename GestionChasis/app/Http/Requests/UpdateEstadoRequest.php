@@ -23,4 +23,12 @@ class UpdateEstadoRequest extends FormRequest
             'slug' => ['sometimes', 'required', 'string', 'max:255', 'alpha_dash', Rule::unique('estados', 'slug')->ignore($estado?->id)],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'nombre.unique' => 'Ya existe un estado con ese nombre.',
+            'slug.unique' => 'Ya existe un estado con ese slug.',
+        ];
+    }
 }

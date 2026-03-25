@@ -22,7 +22,12 @@ class TipoChasisController extends BaseController
 
     public function store(StoreTipoChasisRequest $request): JsonResponse
     {
-        return response()->json($this->tipoChasisService->create($request), 201);
+        $tipoChasis = $this->tipoChasisService->create($request);
+
+        return response()->json([
+            'message' => 'Tipo de chasis creado exitosamente.',
+            ...$tipoChasis->toArray(),
+        ], 201);
     }
 
     public function show(int $id): JsonResponse
@@ -32,7 +37,12 @@ class TipoChasisController extends BaseController
 
     public function update(UpdateTipoChasisRequest $request, TipoChasis $tipoChasis): JsonResponse
     {
-        return response()->json($this->tipoChasisService->update($tipoChasis, $request));
+        $tipoActualizado = $this->tipoChasisService->update($tipoChasis, $request);
+
+        return response()->json([
+            'message' => 'Tipo de chasis actualizado exitosamente.',
+            ...$tipoActualizado->toArray(),
+        ]);
     }
 
     public function destroy(TipoChasis $tipoChasis): JsonResponse

@@ -22,7 +22,12 @@ class EstadoController extends BaseController
 
     public function store(StoreEstadoRequest $request): JsonResponse
     {
-        return response()->json($this->estadoService->create($request), 201);
+        $estado = $this->estadoService->create($request);
+
+        return response()->json([
+            'message' => 'Estado creado exitosamente.',
+            ...$estado->toArray(),
+        ], 201);
     }
 
     public function show(int $id): JsonResponse
@@ -32,7 +37,12 @@ class EstadoController extends BaseController
 
     public function update(UpdateEstadoRequest $request, Estado $estado): JsonResponse
     {
-        return response()->json($this->estadoService->update($estado, $request));
+        $estadoActualizado = $this->estadoService->update($estado, $request);
+
+        return response()->json([
+            'message' => 'Estado actualizado exitosamente.',
+            ...$estadoActualizado->toArray(),
+        ]);
     }
 
     public function destroy(Estado $estado): JsonResponse

@@ -21,7 +21,7 @@ class UpdateChasisRequest extends FormRequest
         return [
             'tipo_chasis_id' => ['sometimes', 'required', 'integer', 'exists:tipo_chasis,id'],
             'ubicacion_id' => ['nullable', 'integer', 'exists:ubicaciones,id'],
-            'nombre' => ['sometimes', 'required', 'string', 'max:255'],
+            'nombre' => ['sometimes', 'required', 'string', 'max:255', Rule::unique('chasis', 'nombre')->ignore($chasis?->id)],
             'categoria' => ['nullable', 'string', 'max:255'],
             'numero' => ['nullable', 'integer', Rule::unique('chasis', 'numero')->ignore($chasis?->id)],
             'estado' => ['prohibited'],
@@ -32,6 +32,14 @@ class UpdateChasisRequest extends FormRequest
             'averia_mangueras' => ['sometimes', 'boolean'],
             'averia_llantas' => ['sometimes', 'boolean'],
             'placa' => ['nullable', 'string', 'max:255'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'nombre.unique' => 'Ya existe un chasis con ese nombre.',
+            'numero.unique' => 'Ya existe un chasis con ese numero.',
         ];
     }
 }

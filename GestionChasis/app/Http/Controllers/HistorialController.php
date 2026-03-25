@@ -23,7 +23,12 @@ class HistorialController extends BaseController
             'accion' => ['sometimes', 'in:creacion,actualizacion,eliminacion'],
         ]);
 
-        return response()->json($this->historialService->allAcciones($filters));
+        $registros = $this->historialService->allAcciones($filters);
+
+        return response()->json([
+            'total' => $registros->count(),
+            'data' => $registros,
+        ]);
     }
 
     public function acciones(Request $request): JsonResponse
@@ -34,7 +39,12 @@ class HistorialController extends BaseController
             'accion' => ['sometimes', 'in:creacion,actualizacion,eliminacion'],
         ]);
 
-        return response()->json($this->historialService->allAcciones($filters));
+        $registros = $this->historialService->allAcciones($filters);
+
+        return response()->json([
+            'total' => $registros->count(),
+            'data' => $registros,
+        ]);
     }
 
     public function ubicaciones(Request $request): JsonResponse
@@ -44,7 +54,12 @@ class HistorialController extends BaseController
             'chasis_id' => ['sometimes', 'integer', 'min:1'],
         ]);
 
-        return response()->json($this->historialService->allUbicaciones($filters));
+        $registros = $this->historialService->allUbicaciones($filters);
+
+        return response()->json([
+            'total' => $registros->count(),
+            'data' => $registros,
+        ]);
     }
 
     public function showAccion(int $id): JsonResponse
@@ -66,7 +81,12 @@ class HistorialController extends BaseController
 
         $filters['chasis_id'] = $id;
 
-        return response()->json($this->historialService->allAcciones($filters));
+        $registros = $this->historialService->allAcciones($filters);
+
+        return response()->json([
+            'total' => $registros->count(),
+            'data' => $registros,
+        ]);
     }
 
     public function byChasisUbicaciones(int $id, Request $request): JsonResponse
@@ -77,7 +97,12 @@ class HistorialController extends BaseController
 
         $filters['chasis_id'] = $id;
 
-        return response()->json($this->historialService->allUbicaciones($filters));
+        $registros = $this->historialService->allUbicaciones($filters);
+
+        return response()->json([
+            'total' => $registros->count(),
+            'data' => $registros,
+        ]);
     }
 
     public function exportUbicacionesByChasisPdf(int $id, Request $request): Response
@@ -94,5 +119,20 @@ class HistorialController extends BaseController
         ]);
 
         return $pdf->download("historial-chasis-{$id}.pdf");
+    }
+
+    public function exportUbicacionesPdfGeneral(Request $request): Response
+    {
+        $filters = $request->validate([]);
+
+        $registros = $this->historialService->allUbicacionesForPdf($filters);
+
+        $pdf = Pdf::loadView('historial.chasis-pdf', [
+            'chasisId' => null,
+            'registros' => $registros,
+            'generadoEn' => now()->format('Y-m-d H:i:s'),
+        ]);
+
+        return $pdf->download('historial-movimientos-general.pdf');
     }
 }

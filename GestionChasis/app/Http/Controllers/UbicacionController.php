@@ -22,7 +22,12 @@ class UbicacionController extends BaseController
 
     public function store(StoreUbicacionRequest $request): JsonResponse
     {
-        return response()->json($this->ubicacionService->create($request), 201);
+        $ubicacion = $this->ubicacionService->create($request);
+
+        return response()->json([
+            'message' => 'Ubicacion creada exitosamente.',
+            ...$ubicacion->toArray(),
+        ], 201);
     }
 
     public function show(int $id): JsonResponse
@@ -32,7 +37,12 @@ class UbicacionController extends BaseController
 
     public function update(UpdateUbicacionRequest $request, Ubicacion $ubicacion): JsonResponse
     {
-        return response()->json($this->ubicacionService->update($ubicacion, $request));
+        $ubicacionActualizada = $this->ubicacionService->update($ubicacion, $request);
+
+        return response()->json([
+            'message' => 'Ubicacion actualizada exitosamente.',
+            ...$ubicacionActualizada->toArray(),
+        ]);
     }
 
     public function destroy(Ubicacion $ubicacion): JsonResponse

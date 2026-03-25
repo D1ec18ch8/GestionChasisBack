@@ -1,0 +1,378 @@
+{
+  "info": {
+    "name": "GestionChasis API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Coleccion de endpoints para probar la API de GestionChasis"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost/GestionChasis/public"
+    },
+    {
+      "key": "chasisId",
+      "value": "1"
+    },
+    {
+      "key": "tipoChasisId",
+      "value": "1"
+    },
+    {
+      "key": "ubicacionId",
+      "value": "1"
+    },
+    {
+      "key": "estadoId",
+      "value": "1"
+    },
+    {
+      "key": "historialAccionId",
+      "value": "1"
+    },
+    {
+      "key": "historialUbicacionId",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Tipos Chasis",
+      "item": [
+        {
+          "name": "Listar tipos chasis",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/tipos-chasis"
+          }
+        },
+        {
+          "name": "Crear tipo chasis",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Plataforma\"\n}"
+            },
+            "url": "{{baseUrl}}/api/tipos-chasis"
+          }
+        },
+        {
+          "name": "Ver tipo chasis",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/tipos-chasis/{{tipoChasisId}}"
+          }
+        },
+        {
+          "name": "Actualizar tipo chasis",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Plataforma Actualizada\"\n}"
+            },
+            "url": "{{baseUrl}}/api/tipos-chasis/{{tipoChasisId}}"
+          }
+        },
+        {
+          "name": "Eliminar tipo chasis",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/tipos-chasis/{{tipoChasisId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ubicaciones",
+      "item": [
+        {
+          "name": "Listar ubicaciones",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/ubicaciones"
+          }
+        },
+        {
+          "name": "Crear ubicacion",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"codigo\": \"UB-001\",\n  \"razon_social\": \"Empresa Demo\",\n  \"aduana\": \"ADU01\",\n  \"direccion\": \"Zona Industrial 123\",\n  \"telefono\": \"555-1234\",\n  \"fax\": \"555-9999\",\n  \"email\": \"demo@empresa.com\",\n  \"nombre\": \"Patio Norte\"\n}"
+            },
+            "url": "{{baseUrl}}/api/ubicaciones"
+          }
+        },
+        {
+          "name": "Ver ubicacion",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/ubicaciones/{{ubicacionId}}"
+          }
+        },
+        {
+          "name": "Actualizar ubicacion",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Patio Norte 2\",\n  \"razon_social\": \"Empresa Demo 2\"\n}"
+            },
+            "url": "{{baseUrl}}/api/ubicaciones/{{ubicacionId}}"
+          }
+        },
+        {
+          "name": "Eliminar ubicacion",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/ubicaciones/{{ubicacionId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Estados",
+      "item": [
+        {
+          "name": "Listar estados",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/estados"
+          }
+        },
+        {
+          "name": "Crear estado",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Mantenimiento\",\n  \"slug\": \"mantenimiento\"\n}"
+            },
+            "url": "{{baseUrl}}/api/estados"
+          }
+        },
+        {
+          "name": "Ver estado",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/estados/{{estadoId}}"
+          }
+        },
+        {
+          "name": "Actualizar estado",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Mantenimiento Programado\",\n  \"slug\": \"mantenimiento-programado\"\n}"
+            },
+            "url": "{{baseUrl}}/api/estados/{{estadoId}}"
+          }
+        },
+        {
+          "name": "Eliminar estado",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/estados/{{estadoId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Chasis",
+      "item": [
+        {
+          "name": "Listar chasis",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/chasis"
+          }
+        },
+        {
+          "name": "Filtrar chasis",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/chasis?per_page=10&estado=revision&equipamiento_mal=luces&search=Chasis"
+          }
+        },
+        {
+          "name": "Crear chasis",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipo_chasis_id\": {{tipoChasisId}},\n  \"ubicacion_id\": {{ubicacionId}},\n  \"nombre\": \"Chasis Demo\",\n  \"categoria\": \"CAT-A\",\n  \"numero\": 1001,\n  \"placa\": \"ABC-123\",\n  \"averia_patas\": false,\n  \"averia_luces\": true,\n  \"averia_manoplas\": false,\n  \"averia_mangueras\": false,\n  \"averia_llantas\": false\n}"
+            },
+            "url": "{{baseUrl}}/api/chasis"
+          }
+        },
+        {
+          "name": "Ver chasis",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/chasis/{{chasisId}}"
+          }
+        },
+        {
+          "name": "Actualizar chasis (mover ubicacion)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ubicacion_id\": {{ubicacionId}},\n  \"averia_luces\": false,\n  \"placa\": \"HIS-5001\"\n}"
+            },
+            "url": "{{baseUrl}}/api/chasis/{{chasisId}}"
+          }
+        },
+        {
+          "name": "Eliminar chasis",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/chasis/{{chasisId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Historial Accion",
+      "item": [
+        {
+          "name": "Listar historial accion",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/historial/acciones?per_page=10"
+          }
+        },
+        {
+          "name": "Ver historial accion por id",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/historial/acciones/{{historialAccionId}}"
+          }
+        },
+        {
+          "name": "Historial accion por chasis",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/chasis/{{chasisId}}/historial/acciones?per_page=10"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Historial Ubicacion",
+      "item": [
+        {
+          "name": "Listar historial ubicacion",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/historial/ubicaciones?per_page=10"
+          }
+        },
+        {
+          "name": "Ver historial ubicacion por id",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/historial/ubicaciones/{{historialUbicacionId}}"
+          }
+        },
+        {
+          "name": "Historial ubicacion por chasis",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/chasis/{{chasisId}}/historial/ubicaciones?per_page=10"
+          }
+        },
+        {
+          "name": "PDF historial ubicacion por chasis",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/historial/ubicaciones/chasis/{{chasisId}}/pdf"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Aliases Compatibilidad",
+      "item": [
+        {
+          "name": "Historial movimientos (alias)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/historial/movimientos?per_page=10"
+          }
+        },
+        {
+          "name": "Historial por chasis (alias acciones)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/chasis/{{chasisId}}/historial?per_page=10"
+          }
+        },
+        {
+          "name": "Historial movimientos por chasis (alias)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/chasis/{{chasisId}}/historial/movimientos?per_page=10"
+          }
+        },
+        {
+          "name": "PDF historial por chasis (alias)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/historial/chasis/{{chasisId}}/pdf"
+          }
+        }
+      ]
+    }
+  ]
+}

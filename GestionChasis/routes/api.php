@@ -7,6 +7,13 @@ use App\Http\Controllers\TipoChasisController;
 use App\Http\Controllers\UbicacionController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('ping', function () {
+    return response()->json([
+        'message' => 'pong',
+        'app' => 'GestionChasis',
+    ]);
+});
+
 Route::apiResource('chasis', ChasisController::class)
     ->parameters(['chasis' => 'chasis']);
 
@@ -23,6 +30,8 @@ Route::get('historial', [HistorialController::class, 'index'])->name('historial.
 Route::get('historial/acciones', [HistorialController::class, 'acciones'])->name('historial.acciones');
 Route::get('historial/ubicaciones', [HistorialController::class, 'ubicaciones'])->name('historial.ubicaciones');
 Route::get('historial/movimientos', [HistorialController::class, 'ubicaciones'])->name('historial.movimientos');
+Route::get('historial/ubicaciones/pdf/general', [HistorialController::class, 'exportUbicacionesPdfGeneral'])->name('historial.ubicaciones.export-pdf-general');
+Route::get('historial/movimientos/pdf/general', [HistorialController::class, 'exportUbicacionesPdfGeneral'])->name('historial.movimientos.export-pdf-general');
 Route::get('historial/acciones/{id}', [HistorialController::class, 'showAccion'])->name('historial.acciones.show');
 Route::get('historial/ubicaciones/{id}', [HistorialController::class, 'showUbicacion'])->name('historial.ubicaciones.show');
 Route::get('historial/chasis/{id}/pdf', [HistorialController::class, 'exportUbicacionesByChasisPdf'])->name('historial.export-pdf');

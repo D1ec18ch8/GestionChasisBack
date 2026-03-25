@@ -7,31 +7,27 @@ use App\Models\HistorialAccion;
 use App\Models\HistorialUbicacion;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class HistorialService
 {
-    public function allAcciones(array $filters = []): LengthAwarePaginator
+    public function allAcciones(array $filters = []): Collection
     {
-        $query = $this->buildFilteredQueryAcciones($filters);
+        $limit = (int) ($filters['per_page'] ?? 100);
 
-        $perPage = (int) ($filters['per_page'] ?? 15);
-
-        return $query
+        return $this->buildFilteredQueryAcciones($filters)
             ->orderByDesc('id')
-            ->paginate($perPage)
-            ->withQueryString();
+            ->limit($limit)
+            ->get();
     }
 
-    public function allUbicaciones(array $filters = []): LengthAwarePaginator
+    public function allUbicaciones(array $filters = []): Collection
     {
-        $query = $this->buildFilteredQueryUbicaciones($filters);
-        $perPage = (int) ($filters['per_page'] ?? 15);
+        $limit = (int) ($filters['per_page'] ?? 100);
 
-        return $query
+        return $this->buildFilteredQueryUbicaciones($filters)
             ->orderByDesc('id')
-            ->paginate($perPage)
-            ->withQueryString();
+            ->limit($limit)
+            ->get();
     }
 
     public function allUbicacionesForPdf(array $filters = []): Collection

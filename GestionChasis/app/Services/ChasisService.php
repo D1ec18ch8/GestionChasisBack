@@ -142,8 +142,9 @@ class ChasisService
         if ($huboCambioUbicacion) {
             $this->historialService->recordMovimiento(
                 $chasis->id,
-                "Movimiento de chasis {$chasis->id}: {$ubicacionAntes} -> {$ubicacionDespues}.",
+                "Movimiento de chasis {$chasisActualizado->nombre} ({$chasis->id}): {$ubicacionAntes} -> {$ubicacionDespues}.",
                 [
+                    'chasis_nombre' => $chasisActualizado->nombre,
                     'origen' => $ubicacionAntes,
                     'destino' => $ubicacionDespues,
                 ]
