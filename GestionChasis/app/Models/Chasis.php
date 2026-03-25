@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use App\Models\Estado;
+use App\Models\HistorialAccion;
+use App\Models\HistorialUbicacion;
 use App\Models\TipoChasis;
 use App\Models\Ubicacion;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Chasis extends Model
 {
@@ -62,6 +65,16 @@ class Chasis extends Model
     public function estadoModel(): BelongsTo
     {
         return $this->belongsTo(Estado::class, 'estado_id');
+    }
+
+    public function historialAcciones(): HasMany
+    {
+        return $this->hasMany(HistorialAccion::class, 'chasis_id');
+    }
+
+    public function historialUbicaciones(): HasMany
+    {
+        return $this->hasMany(HistorialUbicacion::class, 'chasis_id');
     }
 
     public function getEquipamientosEnMalEstadoAttribute(): array

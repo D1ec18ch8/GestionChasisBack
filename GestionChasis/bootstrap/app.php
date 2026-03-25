@@ -3,6 +3,7 @@
 use App\Exceptions\ChasisNotFoundException;
 use App\Exceptions\EstadoInUseException;
 use App\Exceptions\EstadoNotFoundException;
+use App\Exceptions\HistorialNotFoundException;
 use App\Exceptions\ProtectedEstadoException;
 use App\Exceptions\TipoChasisNotFoundException;
 use App\Exceptions\UbicacionNotFoundException;
@@ -56,5 +57,11 @@ return Application::configure(basePath: dirname(__DIR__))
             return response()->json([
                 'message' => $exception->getMessage(),
             ], 409);
+        });
+
+        $exceptions->render(function (HistorialNotFoundException $exception): JsonResponse {
+            return response()->json([
+                'message' => $exception->getMessage(),
+            ], 404);
         });
     })->create();

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('estado')->default('optimo');
             $table->string('placa')->nullable();
             $table->foreignId('tipo_chasis_id')->constrained('tipo_chasis')->cascadeOnDelete();
-            $table->foreignId('ubicacion_id')->nullable()->constrained('ubicaciones')->nullOnDelete();
+            $table->unsignedBigInteger('ubicacion_id')->nullable()->index();
             $table->timestamps();
         });
     }

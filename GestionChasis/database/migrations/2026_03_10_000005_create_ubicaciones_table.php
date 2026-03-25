@@ -23,6 +23,10 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->timestamps();
         });
+
+        Schema::table('chasis', function (Blueprint $table): void {
+            $table->foreign('ubicacion_id')->references('id')->on('ubicaciones')->nullOnDelete();
+        });
     }
 
     /**
@@ -30,6 +34,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('chasis', function (Blueprint $table): void {
+            $table->dropForeign(['ubicacion_id']);
+        });
+
         Schema::dropIfExists('ubicaciones');
     }
 };
