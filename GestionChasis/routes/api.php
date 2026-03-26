@@ -20,8 +20,8 @@ Route::get('ping', function () {
 Route::post('auth/register', [AuthController::class, 'register'])->name('auth.register');
 Route::post('auth/login', [AuthController::class, 'login'])->name('auth.login');
 
-// Rutas protegidas con Sanctum
-Route::middleware('auth:sanctum')->group(function () {
+// Rutas protegidas con JWT
+Route::middleware('auth:api')->group(function () {
     // Autenticación protegida
     Route::post('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
     Route::get('auth/me', [AuthController::class, 'me'])->name('auth.me');
