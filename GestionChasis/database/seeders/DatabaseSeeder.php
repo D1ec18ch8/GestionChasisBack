@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Ejecutar UserSeeder
+        $this->call(UserSeeder::class);
 
         $tipoChasis = TipoChasis::firstOrCreate([
             'nombre' => 'TCF',

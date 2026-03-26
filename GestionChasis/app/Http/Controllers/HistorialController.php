@@ -107,25 +107,22 @@ class HistorialController extends BaseController
 
     public function exportUbicacionesByChasisPdf(int $id, Request $request): Response
     {
-        $filters = $request->validate([]);
-
-        $filters['chasis_id'] = $id;
-        $registros = $this->historialService->allUbicacionesForPdf($filters);
+        $request->validate([]);
+        $registros = $this->historialService->allUbicacionesForPdf();
 
         $pdf = Pdf::loadView('historial.chasis-pdf', [
-            'chasisId' => $id,
+            'chasisId' => null,
             'registros' => $registros,
             'generadoEn' => now()->format('Y-m-d H:i:s'),
         ]);
 
-        return $pdf->download("historial-chasis-{$id}.pdf");
+        return $pdf->download('historial-movimientos-general.pdf');
     }
 
     public function exportUbicacionesPdfGeneral(Request $request): Response
     {
-        $filters = $request->validate([]);
-
-        $registros = $this->historialService->allUbicacionesForPdf($filters);
+        $request->validate([]);
+        $registros = $this->historialService->allUbicacionesForPdf();
 
         $pdf = Pdf::loadView('historial.chasis-pdf', [
             'chasisId' => null,
