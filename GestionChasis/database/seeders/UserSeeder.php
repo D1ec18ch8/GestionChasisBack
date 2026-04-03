@@ -13,25 +13,45 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        $defaultPassword = Hash::make('admin123');
+
         // Crear un usuario administrador
-        User::create([
-            'nombre' => 'Administrador',
+        User::firstOrCreate([
             'email' => 'admin@chasis.com',
-            'password' => Hash::make('admin123'),
+        ], [
+            'nombre' => 'Administrador',
+            'password' => $defaultPassword,
             'rol' => 'admin',
             'activo' => true,
         ]);
 
         // Crear un usuario regular
-        User::create([
-            'nombre' => 'Usuario Prueba',
+        User::firstOrCreate([
             'email' => 'usuario@chasis.com',
+        ], [
+            'nombre' => 'Usuario Prueba',
             'password' => Hash::make('usuario123'),
             'rol' => 'usuario',
             'activo' => true,
         ]);
 
-        // Crear usuarios adicionales usando el factory
-        User::factory(5)->create();
+        $additionalUsers = [
+            ['nombre' => 'Usuario Demo 1', 'email' => 'demo1@chasis.com'],
+            ['nombre' => 'Usuario Demo 2', 'email' => 'demo2@chasis.com'],
+            ['nombre' => 'Usuario Demo 3', 'email' => 'demo3@chasis.com'],
+            ['nombre' => 'Usuario Demo 4', 'email' => 'demo4@chasis.com'],
+            ['nombre' => 'Usuario Demo 5', 'email' => 'demo5@chasis.com'],
+        ];
+
+        foreach ($additionalUsers as $userData) {
+            User::firstOrCreate([
+                'email' => $userData['email'],
+            ], [
+                'nombre' => $userData['nombre'],
+                'password' => Hash::make('usuario123'),
+                'rol' => 'usuario',
+                'activo' => true,
+            ]);
+        }
     }
 }

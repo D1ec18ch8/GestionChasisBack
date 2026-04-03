@@ -20,7 +20,8 @@ RUN composer install --no-interaction --prefer-dist --no-dev --no-scripts --opti
 
 COPY . .
 
-RUN php artisan package:discover --ansi || true
+RUN rm -f bootstrap/cache/*.php \
+    && php artisan package:discover --ansi
 
 RUN chmod +x docker/entrypoint.sh
 

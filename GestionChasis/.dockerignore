@@ -8,3 +8,4 @@ storage/framework/sessions/*
 storage/framework/views/*
 public/storage
 .env
+bootstrap/cache/*.php
