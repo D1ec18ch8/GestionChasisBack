@@ -26,7 +26,12 @@
     @forelse($registros as $registro)
         <div class="bloque">
             <div class="titulo">{{ strtoupper($registro->accion) }} - {{ $registro->descripcion }}</div>
-            <div class="small">Fecha: {{ $registro->created_at }}</div>
+            @php
+                $fechaRegistro = $registro->created_at
+                    ? $registro->created_at->copy()->timezone($timezone ?? config('app.timezone', 'UTC'))->format('Y-m-d H:i:s')
+                    : 'N/D';
+            @endphp
+            <div class="small">Fecha: {{ $fechaRegistro }}</div>
             <div class="small">Placa: {{ $registro->detalle['placa'] ?? ($registro->chasis->placa ?? 'N/D') }}</div>
 
             @if(!empty($registro->detalle['cambios']))

@@ -12,6 +12,7 @@ services:
       APP_NAME: GestionChasis
       APP_ENV: local
       APP_DEBUG: "true"
+      APP_TIMEZONE: America/Costa_Rica
       APP_URL: http://localhost:8000
 
       DB_CONNECTION: mysql
@@ -38,6 +39,7 @@ services:
       APP_NAME: GestionChasis
       APP_ENV: local
       APP_DEBUG: "true"
+      APP_TIMEZONE: America/Costa_Rica
       APP_URL: http://localhost:8000
 
       DB_CONNECTION: mysql

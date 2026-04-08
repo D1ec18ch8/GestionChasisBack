@@ -52,6 +52,7 @@ class HistorialController extends BaseController
         ]);
 
         $registros = $this->historialService->allUbicacionesForPdf($filters);
+        $timezone = (string) config('app.timezone', 'UTC');
         $placa = isset($filters['placa']) ? trim((string) $filters['placa']) : null;
         $nombreArchivo = $placa
             ? 'historial-movimientos-' . preg_replace('/[^a-zA-Z0-9\-_]/', '-', $placa) . '.pdf'
@@ -59,8 +60,9 @@ class HistorialController extends BaseController
 
         $pdf = Pdf::loadView('historial.chasis-pdf', [
             'placa' => $placa,
+            'timezone' => $timezone,
             'registros' => $registros,
-            'generadoEn' => now()->format('Y-m-d H:i:s'),
+            'generadoEn' => now($timezone)->format('Y-m-d H:i:s'),
         ]);
 
         return $pdf->download($nombreArchivo);
