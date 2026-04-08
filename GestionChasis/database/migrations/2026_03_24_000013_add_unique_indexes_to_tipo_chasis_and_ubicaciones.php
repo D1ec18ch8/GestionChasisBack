@@ -25,7 +25,7 @@ return new class extends Migration
         });
 
         Schema::table('chasis', function (Blueprint $table): void {
-            $table->unique('nombre', 'chasis_nombre_unique');
+            $table->unique('placa', 'chasis_placa_unique');
         });
     }
 
@@ -35,7 +35,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('chasis', function (Blueprint $table): void {
-            $table->dropUnique('chasis_nombre_unique');
+            $table->dropUnique('chasis_placa_unique');
         });
 
         Schema::table('estados', function (Blueprint $table): void {

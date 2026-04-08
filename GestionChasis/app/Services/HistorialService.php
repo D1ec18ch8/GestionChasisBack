@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-use App\Exceptions\HistorialNotFoundException;
 use App\Models\HistorialAccion;
 use App\Models\HistorialUbicacion;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
@@ -33,30 +33,9 @@ class HistorialService
     public function allUbicacionesForPdf(array $filters = []): Collection
     {
         return $this->buildFilteredQueryUbicaciones($filters)
+            ->where('created_at', '>=', Carbon::today())
             ->orderBy('id')
             ->get();
-    }
-
-    public function findAccion(int $id): HistorialAccion
-    {
-        $historial = HistorialAccion::with('chasis')->find($id);
-
-        if (! $historial) {
-            throw new HistorialNotFoundException($id);
-        }
-
-        return $historial;
-    }
-
-    public function findUbicacion(int $id): HistorialUbicacion
-    {
-        $historial = HistorialUbicacion::with('chasis')->find($id);
-
-        if (! $historial) {
-            throw new HistorialNotFoundException($id);
-        }
-
-        return $historial;
     }
 
     public function recordAccionApp(int $chasisId, string $accion, string $descripcion, array $detalle = []): HistorialAccion
@@ -109,6 +88,13 @@ class HistorialService
             $query->where(function ($subQuery) use ($chasisId): void {
                 $subQuery->where('chasis_id', $chasisId)
                     ->orWhere('chasis_referencia_id', $chasisId);
+            });
+        }
+
+        if (! empty($filters['placa'])) {
+            $placa = trim((string) $filters['placa']);
+            $query->whereHas('chasis', function (Builder $subQuery) use ($placa): void {
+                $subQuery->where('placa', $placa);
             });
         }
 

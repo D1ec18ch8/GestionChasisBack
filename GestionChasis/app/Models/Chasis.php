@@ -23,7 +23,6 @@ class Chasis extends Model
         'ubicacion_id',
         'estado_id',
         'nombre',
-        'categoria',
         'numero',
         'averia_patas',
         'averia_luces',

@@ -40,8 +40,7 @@ class DatabaseSeeder extends Seeder
             [
             'tipo_chasis_id' => $tipoChasis->id,
                 'ubicacion_id' => $ubicacion->id,
-                'nombre' => 'Chasis TCF',
-                'categoria' => '40 x 2',
+                'nombre' => 'CH-726',
                 'estado' => 'operativo',
                 'placa' => '19283',
             ]

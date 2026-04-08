@@ -25,7 +25,6 @@ class ChasisService
 
             $query->where(function ($subQuery) use ($search): void {
                 $subQuery->where('nombre', 'like', "%{$search}%")
-                    ->orWhere('categoria', 'like', "%{$search}%")
                     ->orWhere('placa', 'like', "%{$search}%");
             });
         }
@@ -140,11 +139,12 @@ class ChasisService
         );
 
         if ($huboCambioUbicacion) {
+            $placa = $chasisActualizado->placa ?? 'N/D';
             $this->historialService->recordMovimiento(
                 $chasis->id,
-                "Movimiento de chasis {$chasisActualizado->nombre} ({$chasis->id}): {$ubicacionAntes} -> {$ubicacionDespues}.",
+                "Movimiento de chasis placa {$placa} ({$chasis->id}): {$ubicacionAntes} -> {$ubicacionDespues}.",
                 [
-                    'chasis_nombre' => $chasisActualizado->nombre,
+                    'placa' => $placa,
                     'origen' => $ubicacionAntes,
                     'destino' => $ubicacionDespues,
                 ]
@@ -202,7 +202,6 @@ class ChasisService
             'estado_id' => $chasis->estado_id,
             'estado' => $chasis->estadoModel?->slug,
             'nombre' => $chasis->nombre,
-            'categoria' => $chasis->categoria,
             'numero' => $chasis->numero,
             'placa' => $chasis->placa,
             'averia_patas' => (bool) $chasis->averia_patas,
@@ -220,7 +219,6 @@ class ChasisService
             'ubicacion' => 'Ubicacion',
             'estado' => 'Estado',
             'nombre' => 'Nombre',
-            'categoria' => 'Categoria',
             'numero' => 'Numero',
             'placa' => 'Placa',
             'averia_patas' => 'Averia patas',

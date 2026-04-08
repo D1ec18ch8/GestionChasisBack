@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('chasis', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('categoria')->nullable();
             $table->unsignedInteger('numero')->nullable();
             $table->string('estado')->default('optimo');
             $table->string('placa')->nullable();

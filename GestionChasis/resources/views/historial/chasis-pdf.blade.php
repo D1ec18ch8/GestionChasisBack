@@ -16,8 +16,8 @@
     </style>
 </head>
 <body>
-    @if($chasisId)
-        <h1>Historial de movimientos del chasis {{ $chasisId }}</h1>
+    @if(!empty($placa))
+        <h1>Historial de movimientos de la placa {{ $placa }}</h1>
     @else
         <h1>Historial general de movimientos de chasis</h1>
     @endif
@@ -27,7 +27,7 @@
         <div class="bloque">
             <div class="titulo">{{ strtoupper($registro->accion) }} - {{ $registro->descripcion }}</div>
             <div class="small">Fecha: {{ $registro->created_at }}</div>
-            <div class="small">Chasis: {{ $registro->detalle['chasis_nombre'] ?? ($registro->chasis->nombre ?? 'N/D') }}</div>
+            <div class="small">Placa: {{ $registro->detalle['placa'] ?? ($registro->chasis->placa ?? 'N/D') }}</div>
 
             @if(!empty($registro->detalle['cambios']))
                 <table>
@@ -71,8 +71,8 @@
             @endif
         </div>
     @empty
-        @if($chasisId)
-            <p>No hay movimientos registrados para este chasis.</p>
+        @if(!empty($placa))
+            <p>No hay movimientos registrados para la placa indicada.</p>
         @else
             <p>No hay movimientos registrados.</p>
         @endif

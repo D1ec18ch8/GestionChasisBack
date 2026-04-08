@@ -15,27 +15,10 @@ class HistorialController extends BaseController
     {
     }
 
-    public function index(Request $request): JsonResponse
-    {
-        $filters = $request->validate([
-            'per_page' => ['sometimes', 'integer', 'min:1', 'max:100'],
-            'chasis_id' => ['sometimes', 'integer', 'min:1'],
-            'accion' => ['sometimes', 'in:creacion,actualizacion,eliminacion'],
-        ]);
-
-        $registros = $this->historialService->allAcciones($filters);
-
-        return response()->json([
-            'total' => $registros->count(),
-            'data' => $registros,
-        ]);
-    }
-
     public function acciones(Request $request): JsonResponse
     {
         $filters = $request->validate([
             'per_page' => ['sometimes', 'integer', 'min:1', 'max:100'],
-            'chasis_id' => ['sometimes', 'integer', 'min:1'],
             'accion' => ['sometimes', 'in:creacion,actualizacion,eliminacion'],
         ]);
 
@@ -47,11 +30,11 @@ class HistorialController extends BaseController
         ]);
     }
 
-    public function ubicaciones(Request $request): JsonResponse
+    public function movimientos(Request $request): JsonResponse
     {
         $filters = $request->validate([
             'per_page' => ['sometimes', 'integer', 'min:1', 'max:100'],
-            'chasis_id' => ['sometimes', 'integer', 'min:1'],
+            'placa' => ['sometimes', 'string', 'max:50'],
         ]);
 
         $registros = $this->historialService->allUbicaciones($filters);
@@ -62,74 +45,24 @@ class HistorialController extends BaseController
         ]);
     }
 
-    public function showAccion(int $id): JsonResponse
-    {
-        return response()->json($this->historialService->findAccion($id));
-    }
-
-    public function showUbicacion(int $id): JsonResponse
-    {
-        return response()->json($this->historialService->findUbicacion($id));
-    }
-
-    public function byChasisAcciones(int $id, Request $request): JsonResponse
+    public function exportMovimientosPdf(Request $request): Response
     {
         $filters = $request->validate([
-            'per_page' => ['sometimes', 'integer', 'min:1', 'max:100'],
-            'accion' => ['sometimes', 'in:creacion,actualizacion,eliminacion'],
+            'placa' => ['sometimes', 'string', 'max:50'],
         ]);
 
-        $filters['chasis_id'] = $id;
-
-        $registros = $this->historialService->allAcciones($filters);
-
-        return response()->json([
-            'total' => $registros->count(),
-            'data' => $registros,
-        ]);
-    }
-
-    public function byChasisUbicaciones(int $id, Request $request): JsonResponse
-    {
-        $filters = $request->validate([
-            'per_page' => ['sometimes', 'integer', 'min:1', 'max:100'],
-        ]);
-
-        $filters['chasis_id'] = $id;
-
-        $registros = $this->historialService->allUbicaciones($filters);
-
-        return response()->json([
-            'total' => $registros->count(),
-            'data' => $registros,
-        ]);
-    }
-
-    public function exportUbicacionesByChasisPdf(int $id, Request $request): Response
-    {
-        $request->validate([]);
-        $registros = $this->historialService->allUbicacionesForPdf();
+        $registros = $this->historialService->allUbicacionesForPdf($filters);
+        $placa = isset($filters['placa']) ? trim((string) $filters['placa']) : null;
+        $nombreArchivo = $placa
+            ? 'historial-movimientos-' . preg_replace('/[^a-zA-Z0-9\-_]/', '-', $placa) . '.pdf'
+            : 'historial-movimientos-general.pdf';
 
         $pdf = Pdf::loadView('historial.chasis-pdf', [
-            'chasisId' => null,
+            'placa' => $placa,
             'registros' => $registros,
             'generadoEn' => now()->format('Y-m-d H:i:s'),
         ]);
 
-        return $pdf->download('historial-movimientos-general.pdf');
-    }
-
-    public function exportUbicacionesPdfGeneral(Request $request): Response
-    {
-        $request->validate([]);
-        $registros = $this->historialService->allUbicacionesForPdf();
-
-        $pdf = Pdf::loadView('historial.chasis-pdf', [
-            'chasisId' => null,
-            'registros' => $registros,
-            'generadoEn' => now()->format('Y-m-d H:i:s'),
-        ]);
-
-        return $pdf->download('historial-movimientos-general.pdf');
+        return $pdf->download($nombreArchivo);
     }
 }

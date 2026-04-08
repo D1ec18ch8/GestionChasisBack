@@ -18,7 +18,6 @@ class StoreChasisRequest extends FormRequest
             'tipo_chasis_id' => ['required', 'integer', 'exists:tipo_chasis,id'],
             'ubicacion_id' => ['nullable', 'integer', 'exists:ubicaciones,id'],
             'nombre' => ['required', 'string', 'max:255', Rule::unique('chasis', 'nombre')],
-            'categoria' => ['nullable', 'string', 'max:255'],
             'numero' => ['nullable', 'integer', Rule::unique('chasis', 'numero')],
             'estado' => ['prohibited'],
             'estado_id' => ['prohibited'],
@@ -27,7 +26,7 @@ class StoreChasisRequest extends FormRequest
             'averia_manoplas' => ['sometimes', 'boolean'],
             'averia_mangueras' => ['sometimes', 'boolean'],
             'averia_llantas' => ['sometimes', 'boolean'],
-            'placa' => ['nullable', 'string', 'max:255'],
+            'placa' => ['required', 'string', 'max:255', Rule::unique('chasis', 'placa')],
         ];
     }
 
@@ -35,6 +34,8 @@ class StoreChasisRequest extends FormRequest
     {
         return [
             'nombre.unique' => 'Ya existe un chasis con ese nombre.',
+            'placa.required' => 'La placa es obligatoria.',
+            'placa.unique' => 'Ya existe un chasis con esa placa.',
             'numero.unique' => 'Ya existe un chasis con ese numero.',
         ];
     }
